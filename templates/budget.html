@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Budget
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+{% block main %}
+<main>
+    <h2 class="page-heading">Budgets</h2>
+    <button type="button" class="btn btn-primary add-btn" id="add-btn" data-bs-toggle="modal" data-bs-target="#budget_modal">
+        Add Budget
+    </button>
+        
+    <div class="modal fade" id="budget_modal" tabindex="-1" aria-labelledby="budget_label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="budget_label"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form action="/budget/add" method="post" id="add_budget">
+                        <div class="row">
+                            <select name="category" class="bd-cat">
+                                <option disabled selected value></option>
+                                {% for category in categories %}
+                                    <option value="{{ category['category_name'] }}">{{ category["category_name"] }}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="number" name="amount" class="bd-amount" placeholder="Amount" required>
+                        </div>
+                        <div class="row">
+                            <input type="date" id="date_start" name="date_start" placeholder="Start Date" required>
+                            <input type="date" id="date_end" name="date_end" placeholder="End Date" required>
+                        </div>
+                        <div class="row">
+                            <button type="submit">Add</button>
+                        </div>
+                    </form>
+
+                    <form action="/budget/edit" method="post" id="edit_budget">
+                        <div>
+                            <input type="number" class="hidden" name="budget_id" id="budget_id">
+                        </div>
+                        <div class="row">
+                            <select name="category" required class="bd-cat" id="category">
+                                {% for category in categories %}
+                                    <option value="{{ category['category_name'] }}">{{ category["category_name"] }}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="number" id="amount" class="bd-amount" name="amount" placeholder="Amount" required>
+                        </div>
+                        <div class="row">
+                            <input type="date" id="date_start" name="date_start" placeholder="Start Date" required>
+                            <input type="date" id="date_end" name="date_end" placeholder="End Date" required>
+                        </div>
+                        <div class="row">
+                            <button type="submit">Save Changes</button>
+                        </div>
+                    </form>
+
+                    <form action="/budget/delete" method="post" id="delete_budget">
+                        <div>
+                            <input type="number" class="hidden" name="budget_id" id="budget_id">
+                        </div>
+                        <div class="row">
+                            <button type="submit">Confirm Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>  
+            </div>
+        </div>
+    </div>
+    <div class="data-table">
+        <table class="table table-hover table-dark table-bordered">
+            <thead>
+                <tr>
+                    <th class="hidden">Budget Id</th>
+                    <th style="width:20%;">Category</th>
+                    <th style="width:20%">Budget</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th style="width:18%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for budget in budgets %}
+                    <tr>
+                        <td class="hidden">{{ budget["id"] }}</td>
+                        <td>{{ budget["category_name"] }}</td>
+                        <td>{{ budget["amount"] }}</td>
+                        <td>{{ budget["start"] }}</td>
+                        <td>{{ budget["end"] }}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#budget_modal">Edit</button>
+                                <button type="button" class="btn btn-primary del-btn" data-bs-toggle="modal" data-bs-target="#budget_modal">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}
+
+{% block js %}
+<script src="/static/budget.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var error = "{{ error_message }}";
+        if (error !== "") {
+            alert(error);
+        }
+    })
+</script>
+{% endblock %}

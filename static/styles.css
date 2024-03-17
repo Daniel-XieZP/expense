@@ -1,0 +1,184 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5dc;
+    height: 100vh;
+}
+
+main {
+    height: calc(100vh - 106px);
+    width: 70%;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form {
+    margin-top: 100px;
+    width: 30%;
+}
+
+.row {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.form > *, .row > *, .custom input, .custom button { 
+    border-radius: 5px;
+    border-color: #D3D3D3;
+    border-style: solid;
+    margin: 10px auto;
+    width: 100%;
+    height: 40px;
+}
+
+.custom {
+    padding: 10px;
+}
+
+.data-table {
+    width: 90%;
+    overflow: auto;
+}
+
+.data-table td {
+    white-space: nowrap;
+}
+
+.alerts {
+    margin: 5px auto;
+    width: 30%;
+}
+
+.hidden {
+    display: none;
+}
+
+.page-heading {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.add-btn {
+    align-self: flex-end;
+    margin-right: 5%;
+    margin-bottom: 10px;
+}
+
+.flex-row {
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-top: 30px;
+    margin-bottom: 100px;
+}
+
+#dashboard {
+    display: flex;
+    flex-direction: column;
+    margin-right: 50px;
+    width: 70%;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+#dashboard > * {
+    margin: 0px 0px 20px 0px;
+}
+
+#expenseChart {
+    width: 350px !important;
+    height: 350px !important;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+#summary, #summary .card {
+    flex: 1;
+    height: 100%;
+}
+
+.card-body > * {
+    text-align: center;
+}
+
+#expense-breakdown, #rbudget, #ebudget {
+    margin: 0 auto;
+}
+
+#rbudget, #ebudget {
+    margin-top: 10px;
+}
+
+#budget-view {
+    margin-top: 100px;
+}
+
+@media screen and (max-width:900px) {
+    #dashboard #period {
+        flex-wrap: wrap;
+    }
+
+    #dashboard {
+        margin-right: 20px;
+    }
+
+    #expenseChart {
+        width: 300px !important;
+        height: 300px !important;
+    }
+
+    .flex-row {
+        justify-content: center;
+        margin: 30px auto 100px;
+    }
+}
+
+@media screen and (max-width:700px) {
+    .flex-row {
+        flex-wrap: wrap;
+        align-items: center;
+        flex-grow: 1;
+    }
+
+    #expenseChart {
+        width: 300px !important;
+        height: 300px !important;
+    }
+
+    #dashboard {
+        margin: 0;
+    }
+
+    #summary, #summary .card, #dashboard {
+        margin: 0 auto 20px;
+        height: auto;
+    }
+
+    #summary, #summary .card, #dashboard {
+        width: 80%;
+    }
+} 
+
+@media screen and (max-width: 600px) {
+    .form, .alerts {    
+        width: 80%;
+    }
+
+    .form > *, .row > * {
+        height: 60px;
+    }
+
+    main {
+        width: 90%;
+        margin: 0px auto;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    #expenseChart {
+        width: 250px !important;
+        height: 250px !important;
+    }
+}

@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Expense
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block main %}    
+<main>
+    <h2 class="page-heading">Expenses</h2>
+    <button type="button" class="btn btn-primary add-btn" id="add-btn" data-bs-toggle="modal" data-bs-target="#expense_modal">
+        Add Expense
+    </button>
+        
+    <div class="modal fade" id="expense_modal" tabindex="-1" aria-labelledby="expense_label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="expense_label"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="height:auto;">
+                <div class="container-fluid modal-content">
+                    <form action="/expense/add" method="post" id="add_expense">
+                        <div class="row">
+                            <select name="category" required>
+                                <option disabled selected value></option>
+                                {% for category in categories %}
+                                    <option value="{{ category['category_name'] }}">{{ category["category_name"] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="row">
+                            <input type="number" name="amount" id="amount" class="ex-amount" placeholder="Amount" min="0.1" step="any" required>
+                            <input type="date" name="date" id="date" class="ex-date" placeholder="Date of Expense" required>
+                        </div>
+                        <div class="row">
+                            <textarea name="description" placeholder="Description"></textarea>
+                        </div>
+                        <div class="row">
+                            <button type="submit">Add Expense</button>
+                        </div>
+                    </form>
+
+                    <form action="/expense/edit" method="post" id="edit_expense">
+                        <div>
+                            <input type="number" class="hidden" name="expense_id" id="expense_id">
+                        </div>
+                        <div class="row">
+                            <select name="category" required id="category">
+                                {% for category in categories %}
+                                    <option value="{{ category['category_name'] }}">{{ category["category_name"] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="row">
+                            <input type="number" id="amount" class="ex-amount" name="amount" placeholder="Amount" required>
+                            <input type="date" id="date" name="date" class="ex-date" placeholder="Expense Date" required>
+                        </div>
+                        <div class="row">
+                            <textarea id="desc" name="description" placeholder="Description"></textarea>
+                        </div>
+                        <div class="row">
+                            <button type="submit">Save Changes</button>
+                        </div>
+                    </form>
+
+                    <form action="/expense/delete" method="post" id="delete_expense">
+                        <div class="row">
+                            <input type="number" class="hidden" name="expense_id" id="expense_id">
+                        </div>
+                        <div>
+                            <button type="submit">Confirm Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>  
+            </div>
+        </div>
+    </div>
+    
+    <div class="data-table">
+        <table class="table table-hover table-dark table-bordered">
+            <thead>
+                <tr>
+                    <th class="hidden">Expense Id</th>
+                    <th style="width:20%;">Category</th>
+                    <th style="width:20%;">Amount</th>
+                    <th style="width:15%;">Date</th>
+                    <th>Description</th>
+                    <th style="width:50px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                    <tr>
+                        <td class="hidden">{{ expense["id"] }}</td>
+                        <td>{{ expense["category_name"] }}</td>
+                        <td>{{ expense["amount"] }}</td>
+                        <td>{{ expense["date"] }}</td>
+                        <td>{{ expense["description"] }}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#expense_modal">Edit</button>
+                                <button type="button" class="btn btn-primary del-btn" data-bs-toggle="modal" data-bs-target="#expense_modal">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}
+
+{% block js %}
+<script src="/static/expense.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var error = "{{ error_message }}";
+        if (error !== "") {
+            alert(error);
+        }
+    })
+</script>
+{% endblock %}

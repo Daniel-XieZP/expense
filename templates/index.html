@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/palette.js"></script>
+{% endblock %}
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+<main class="flex-row">
+    
+    <div id="dashboard">
+        <div class="btn-group" role="group">
+            <button type="button" id="expenseBtn" class="btn btn-primary">Expense</button>
+            <button type="button" id="budgetBtn" class="btn btn-primary">Budget</button>
+        </div>
+        <div class="btn-group" role="group" id="period">
+            <button type="button" id="week" class="btn btn-secondary">Week</button>
+            <button type="button" id="month"class="btn btn-secondary">Month</button>
+            <button type="button" id="quarter" class="btn btn-secondary">Past 3 Months</button>
+            <button type="button" id="year" class="btn btn-secondary">Past Year</button>
+            <button type="button" id="custom" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Custom</button>
+            <ul class="dropdown-menu custom">
+                <li><label for="sDate">Start Date:</label><input type="date" name="sDate" id="sDate" required></li>
+                <li><label for="eDate">End Date:</label><input type="date" name="eDate" id="eDate" required></li>
+                <li><button type="button" id="customBtn">Done</button>
+            </ul>
+        </div>
+        <canvas id="expenseChart"></canvas>
+        <canvas id="budget-view"></canvas>
+    </div>
+    <div id="summary" class="flex-2">
+        <div class="card border-info" style="width: 18rem;">
+            <div class="card-body" id="expense-summary"> 
+                <h5 class="card-title" id="time-frame">Time Frame</h5>
+                <h6 class="card-subtitle mb-2 text-muted">All categories included</h6>
+                <hr>
+                <h5 class="card-title">Total Expenses
+                <p id="total-expenses">$0.00</p>
+                <hr>
+                <table id="expense-breakdown">
+                    <thead>
+                        <tr>
+                            <th style="width:160px;">Categories</th>
+                            <th>Expense</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>   
+            </div>
+            <div class="card-body" id="budget-summary">
+                <h5 class="card-title" id="time-frame">Active Budgets</h5>
+                <h6 class="card-subtitle mb-2 text-muted">All categories included</h6>
+                <hr>
+                <h5 class="card-title">Remaining Budgets
+                <table id="rbudget">
+                    <thead>
+                        <tr>
+                            <th style="width:160px;">Categories</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table> 
+                <hr>
+                <h5 class="card-title">Exceeded Budgets
+                <table id="ebudget">
+                    <thead>
+                        <tr>
+                            <th style="width:160px;">Categories</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table> 
+            </div>
+          </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block js %}
+<script src="/static/index.js"></script>
+{% endblock %}
